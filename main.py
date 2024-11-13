@@ -1,4 +1,5 @@
 from algorithms.edge_detection.gradient_edge_detector import GradientEdgeDetector
+from algorithms.edge_detection.laplace_edge_detector import LaplacianEdgeDetector
 from image import Image
 from plot import Plot
 

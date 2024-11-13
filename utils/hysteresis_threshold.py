@@ -9,10 +9,14 @@ def hysteresis_threshold(magnitude, low_threshold, high_threshold):
 
     weak_edges = (magnitude >= low_threshold) & (magnitude < high_threshold)
 
-    for y in range(1, magnitude.shape[0] - 1):
-        for x in range(1, magnitude.shape[1] - 1):
-            if weak_edges[y, x]:
-                if np.any(strong_edges[y - 1 : y + 2, x - 1 : x + 2]):
-                    edges[y, x] = 255
+    weak_edges_dilated = np.zeros_like(magnitude, dtype=bool)
+
+    for i in range(1, magnitude.shape[0] - 1):
+        for j in range(1, magnitude.shape[1] - 1):
+            if weak_edges[i, j]:
+                if np.any(strong_edges[i - 1 : i + 2, j - 1 : j + 2]):
+                    weak_edges_dilated[i, j] = True
+
+    edges[weak_edges_dilated] = 255
 
     return edges
